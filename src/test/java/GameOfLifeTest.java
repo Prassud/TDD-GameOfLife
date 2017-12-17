@@ -65,7 +65,7 @@ public class GameOfLifeTest {
         Grid grid = new Grid(liveCellPositions, 10);
         GameOfLife gameOfLife = new GameOfLife(grid);
         gameOfLife.tickToNextGeneration();
-        Assert.assertFalse(grid.getGridCell(1, 2).isLive());
+        Assert.assertFalse(grid.getGridCell(1, 1).isLive());
     }
 
 
@@ -77,7 +77,7 @@ public class GameOfLifeTest {
         Grid grid = new Grid(liveCellPositions, 10);
         GameOfLife gameOfLife = new GameOfLife(grid);
         gameOfLife.tickToNextGeneration();
-        Assert.assertFalse(grid.getGridCell(1, 2).isLive());
+        Assert.assertFalse(grid.getGridCell(1, 1).isLive());
         Assert.assertTrue(grid.getGridCell(0, 1).isLive());
     }
 
