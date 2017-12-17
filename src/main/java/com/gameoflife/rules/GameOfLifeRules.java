@@ -1,14 +1,24 @@
 package com.gameoflife.rules;
 
-public class GameOfLifeRules {
+import com.gameoflife.Cell;
 
-    public void applyTheRulesToCell(Cell cell, int totalNeighbourLiveCell) {
-        if (totalNeighbourLiveCell < 2) {
+public final class GameOfLifeRules {
 
-        }else if(totalNeighbourLiveCell > 3){
+    public static boolean applyTheRulesToCell(Cell cell, int totalNeighbourLiveCell) {
+        boolean isCellStateChanged = false;
 
-        }else if(totalNeighbourLiveCell == 3 || totalNeighbourLiveCell == 2){
-
+        if (cell.isLive()) {
+            if ((totalNeighbourLiveCell < 2 || totalNeighbourLiveCell > 3)) {
+                cell.updateFutureLiveStatus(false);
+                isCellStateChanged = true;
+            }
+        } else {
+            if (totalNeighbourLiveCell == 3 || totalNeighbourLiveCell == 2) {
+                cell.updateFutureLiveStatus(true);
+                isCellStateChanged = true;
+            }
         }
+
+        return isCellStateChanged;
     }
 }

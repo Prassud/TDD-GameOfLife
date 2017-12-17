@@ -5,19 +5,20 @@ import com.gameoflife.Grid;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.List;
 
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.*;
 
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(GameOfLife.class)
+@PrepareForTest(GameOfLifeUtility.class)
 public class GameOfLifeTest {
     @Test
     public void verifyIfGridCanBeBuiltWithTheGivenLiveCellPositions() {
@@ -34,33 +35,59 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void verifyIfFirstRuleisSatisifedForTheGivenInputs(){
+    public void verifyIfFirstRuleIsSatisfedForTheGivenInputs() {
 
+        int[][] neighbourIndices = GameOfLifeUtility.getNeighbourIndexOfCurrentCell(1, 1);
+        mockStatic(GameOfLifeUtility.class);
+        Cell mockCell = mock(Cell.class);
+        Cell mockDeadCell = mock(Cell.class);
+        when(GameOfLifeUtility.createLiveCell()).thenReturn(mockCell);
+        when(GameOfLifeUtility.getNeighbourIndexOfCurrentCell(anyInt(), anyInt())).thenReturn(neighbourIndices);
+        when(mockCell.isLive()).thenReturn(true);
+        when(GameOfLifeUtility.createDeadCell()).thenReturn(mockDeadCell);
+        when(mockDeadCell.isLive()).thenReturn(false);
+        when(GameOfLifeUtility.isValidIndex(anyInt(), anyInt(), anyInt())).thenReturn(true);
         String liveCellPositions[] = new String[]
                 {"1, 1"};
-        Grid grid = new Grid(liveCellPositions,10);
+        Grid mockGrid = new Grid(liveCellPositions, 10);
+        Grid grid = new Grid(liveCellPositions, 10);
         GameOfLife gameOfLife = new GameOfLife(grid);
-
+        gameOfLife.tickToNextGeneration();
+        Assert.assertNotEquals(mockGrid, grid);
+        verify(mockCell, times(1)).updateFutureLiveStatus(false);
 
     }
 
+    @Test
+    public void verifyIfSecondRuleIsSatisfiedWithCellsInIndexesAreLive() {
+
+        String liveCellPositions[] = new String[]
+                {"1,0", "1,1", "1,2", "0,1", "2,1"};
+        Grid grid = new Grid(liveCellPositions, 10);
+        GameOfLife gameOfLife = new GameOfLife(grid);
+        gameOfLife.tickToNextGeneration();
+        Assert.assertFalse(grid.getGridCell(1, 2).isLive());
+    }
 
 
     @Test
-    public void verifyIfPatternProvidedIsStillPattern(){
-        Cell eachCell = mock(Cell.class);
-        GameOfLife gameOfLife = mock(GameOfLife.class);
-        when(gameOfLife.createLiveCell()).thenReturn(eachCell);
-        when(eachCell.isLive()).thenReturn(true);
+    public void verifyIfSecondAndThirdRuleIsSatisfiedWithCellsInIndexesAreLive() {
+
         String liveCellPositions[] = new String[]
-                {"1, 1", "1, 2", "2, 1", "2, 2"};
-        Grid grid = new Grid(liveCellPositions, 4);
-
-
+                {"1,0", "1,1", "1,2", "0,1", "2,1"};
+        Grid grid = new Grid(liveCellPositions, 10);
+        GameOfLife gameOfLife = new GameOfLife(grid);
+        gameOfLife.tickToNextGeneration();
+        Assert.assertFalse(grid.getGridCell(1, 2).isLive());
+        Assert.assertTrue(grid.getGridCell(0, 1).isLive());
     }
 
 
+    @Test
+    public void verifyIfPatternProvidedIsStillPattern() {
 
+
+    }
 
 
 }

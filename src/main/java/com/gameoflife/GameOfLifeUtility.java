@@ -1,6 +1,6 @@
 package com.gameoflife;
 
-public final class GameOfLifeUtility {
+public  class GameOfLifeUtility {
 
 
     public static Cell createLiveCell() {
@@ -11,7 +11,7 @@ public final class GameOfLifeUtility {
         return new Cell(false);
     }
 
-    public static int[][] getNeighBourIndexOfCurrentCell(int row, int column) {
+    public static int[][] getNeighbourIndexOfCurrentCell(int row, int column) {
         int rightColumn = column - 1;
         int leftColumn = column + 1;
         int upRow = row - 1;
@@ -33,7 +33,7 @@ public final class GameOfLifeUtility {
     }
 
     public static boolean isValidIndex(int row, int column, int maxSize) {
-        return (row > 0 && row < maxSize) && (column > 0 && column < maxSize);
+        return (row >=0 && row < maxSize) && (column >=0 && column < maxSize);
     }
 
 }

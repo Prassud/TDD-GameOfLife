@@ -1,19 +1,30 @@
 package com.gameoflife;
 
 public class Cell {
-    private boolean live;
+    private boolean currLiveStatus;
 
-    public Cell(boolean isLi) {
+    private boolean futureLiveStatus;
+
+    public Cell(boolean isLive) {
+        this.currLiveStatus = isLive;
     }
 
+    public void updateCurrLiveCellFromFuture(){
+        this.currLiveStatus = futureLiveStatus;
+    }
+
+    public void updateFutureLiveStatus(boolean currStatus) {
+        this.futureLiveStatus = currStatus;
+    }
     public boolean isLive() {
-        return live;
+        return currLiveStatus;
     }
+
 
     @Override
     public String toString() {
         return "Cell{" +
-                "live=" + live +
+                "currLiveStatus=" + currLiveStatus +
                 '}';
     }
 }
