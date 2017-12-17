@@ -1,7 +1,4 @@
-import com.gameoflife.Cell;
-import com.gameoflife.GameOfLife;
-import com.gameoflife.GameOfLifeUtility;
-import com.gameoflife.Grid;
+import com.gameoflife.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +17,7 @@ import static org.powermock.api.mockito.PowerMockito.*;
 @PrepareForTest(GameOfLifeUtility.class)
 public class GameOfLifeTest {
     @Test
-    public void verifyIfGridCanBeBuiltWithTheGivenLiveCellPositions() {
+    public void verifyIfGridCanBeBuiltWithTheGivenLiveCellPositions() throws InvalidGridException {
         mockStatic(GameOfLifeUtility.class);
         Cell eachCell = mock(Cell.class);
         when(GameOfLifeUtility.createLiveCell()).thenReturn(eachCell);
@@ -34,7 +31,7 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void verifyIfFirstRuleIsSatisfedForTheGivenInputs() {
+    public void verifyIfFirstRuleIsSatisfedForTheGivenInputs() throws InvalidGridException {
 
         int[][] neighbourIndices = GameOfLifeUtility.getNeighbourIndexOfCurrentCell(1, 1);
         mockStatic(GameOfLifeUtility.class);
@@ -58,7 +55,7 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void verifyIfSecondRuleIsSatisfiedWithCellsInIndexesAreLive() {
+    public void verifyIfSecondRuleIsSatisfiedWithCellsInIndexesAreLive() throws InvalidGridException {
 
         String liveCellPositions[] = new String[]
                 {"1,0", "1,1", "1,2", "0,1", "2,1"};
@@ -70,7 +67,7 @@ public class GameOfLifeTest {
 
 
     @Test
-    public void verifyIfSecondAndFourthRulesAreSatisfiedWithCellsInIndexesAreLive() {
+    public void verifyIfSecondAndFourthRulesAreSatisfiedWithCellsInIndexesAreLive() throws InvalidGridException {
 
         String liveCellPositions[] = new String[]
                 {"1,0", "1,1", "1,2", "0,1", "2,1"};
@@ -83,7 +80,7 @@ public class GameOfLifeTest {
 
 
     @Test
-    public void verifyIfPatternProvidedIsPattern() {
+    public void verifyIfPatternProvidedIsPattern() throws InvalidGridException {
 
         String expectedResult = "    " + System.lineSeparator() + " XX " + System.lineSeparator() + " XX " + System.lineSeparator() + "    " + System.lineSeparator();
 
@@ -98,7 +95,7 @@ public class GameOfLifeTest {
 
 
     @Test
-    public void verifyIfPatternProvidedIsOscillatorPattern() {
+    public void verifyIfPatternProvidedIsOscillatorPattern() throws InvalidGridException {
         String expectedResult = " X " + System.lineSeparator() + " X " + System.lineSeparator() + " X " + System.lineSeparator();
 
         String liveCellPositions[] = new String[]
@@ -111,7 +108,7 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void verifyIfPatternProvidedIsToadPattern() {
+    public void verifyIfPatternProvidedIsToadPattern() throws InvalidGridException {
 
 
         String expectedLiveCellPositions[] = new String[]

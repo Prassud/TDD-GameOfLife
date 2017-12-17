@@ -10,7 +10,10 @@ public class GameOfLife {
 
     private List<Cell> nextGenModifiedCells;
 
-    public GameOfLife(Grid grid) {
+    public GameOfLife(Grid grid) throws InvalidGridException {
+        if(null == grid) {
+            throw new InvalidGridException("Grid is null");
+        }
         this.grid = grid;
         this.nextGenModifiedCells = new LinkedList<>();
     }

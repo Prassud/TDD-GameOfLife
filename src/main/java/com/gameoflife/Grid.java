@@ -13,9 +13,12 @@ public class Grid {
         return gridCells.length;
     }
 
-    public Grid(String[] cellPositions, int maxGridSize) {
+    public Grid(String[] cellPositions, int maxGridSize) throws InvalidGridException {
 
         this.gridCells = new Cell[maxGridSize][maxGridSize];
+        if (maxGridSize < 1) {
+            throw new InvalidGridException("Grid Size Cant be 0 or Less than 0");
+        }
         Arrays.stream(cellPositions).forEach(cellPosition -> {
             createCellBasedOnIndex(cellPosition);
         });
