@@ -140,5 +140,10 @@ public class GameOfLifeTest {
         new GameOfLife(null);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void verifyIfGridThrowsInvalidGridIndexExceptionWhenGivenInputHasInvalidIndexAsNegative() throws InvalidGridException {
+        new Grid(new String[]{"-1,0"},10);
+    }
+
 
 }

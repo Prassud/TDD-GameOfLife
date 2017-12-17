@@ -3,6 +3,7 @@ package com.gameoflife;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Grid {
@@ -13,7 +14,7 @@ public class Grid {
         return gridCells.length;
     }
 
-    public Grid(String[] cellPositions, int maxGridSize) throws InvalidGridException {
+    public Grid(String[] cellPositions, int maxGridSize) throws InvalidGridException, InvalidGridIndexException {
 
         if (maxGridSize < 1) {
             throw new InvalidGridException("Grid Size Cant be 0 or Less than 0");
@@ -21,16 +22,25 @@ public class Grid {
 
         this.gridCells = new Cell[maxGridSize][maxGridSize];
 
-        Arrays.stream(cellPositions).forEach(cellPosition -> {
-            createCellBasedOnIndex(cellPosition);
+
+
+        Arrays.stream(cellPositions).forEach((String cellPosition) -> {
+            try {
+                createCellBasedOnIndex(cellPosition);
+            } catch (InvalidGridIndexException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
 
-    private void createCellBasedOnIndex(String cellPositon) {
+    private void createCellBasedOnIndex(String cellPositon) throws InvalidGridIndexException {
         String[] indexes = cellPositon.split(",");
         int row = Integer.parseInt(indexes[0].trim());
         int column = Integer.parseInt(indexes[1].trim());
+        boolean validIndex = GameOfLifeUtility.isValidIndex(row, column, getTotalGridSize());
+        if (!validIndex)
+            throw new InvalidGridIndexException("Invalid Index Provided");
         gridCells[row][column] = GameOfLifeUtility.createLiveCell();
     }
 
