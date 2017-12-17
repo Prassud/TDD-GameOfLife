@@ -99,7 +99,7 @@ public class GameOfLifeTest {
 
     @Test
     public void verifyIfPatternProvidedIsOscillatorPattern() {
-        String expectedResult = " X " + System.lineSeparator() + " X " + System.lineSeparator() + " X " + System.lineSeparator() ;
+        String expectedResult = " X " + System.lineSeparator() + " X " + System.lineSeparator() + " X " + System.lineSeparator();
 
         String liveCellPositions[] = new String[]
                 {"1, 1", "1, 0", "1, 2"};
@@ -107,6 +107,23 @@ public class GameOfLifeTest {
         GameOfLife gameOfLife = new GameOfLife(grid);
         gameOfLife.tickToNextGeneration();
         Assert.assertEquals(expectedResult, grid.getGridCellOutput());
+
+    }
+
+    @Test
+    public void verifyIfPatternProvidedIsToadPattern() {
+
+
+        String expectedLiveCellPositions[] = new String[]
+                {"0, 2", "1, 1", "1, 4", "2, 1", "2, 4", "3, 3"};
+        Grid expectedGrid = new Grid(expectedLiveCellPositions, 10);
+
+        String liveCellPositions[] = new String[]
+                {"1, 1", "1, 2", "1, 3", "2, 2", "2, 3", "2, 4"};
+        Grid grid = new Grid(liveCellPositions, 10);
+        GameOfLife gameOfLife = new GameOfLife(grid);
+        gameOfLife.tickToNextGeneration();
+        Assert.assertEquals(expectedGrid.getGridCellOutput(), grid.getGridCellOutput());
 
     }
 

@@ -53,10 +53,23 @@ public class Grid {
         StringBuffer buffer = new StringBuffer(10);
         for (Cell[] eachRowCells : gridCells) {
             for (Cell eachCell : eachRowCells) {
-                buffer.append(eachCell != null  && eachCell.isLive() ? 'X' : ' ');
+                buffer.append(eachCell != null && eachCell.isLive() ? 'X' : ' ');
             }
             buffer.append(System.lineSeparator());
         }
         return buffer.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Grid grid = (Grid) o;
+        return Arrays.equals(gridCells, grid.gridCells);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(gridCells);
     }
 }

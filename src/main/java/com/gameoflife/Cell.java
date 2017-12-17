@@ -1,5 +1,7 @@
 package com.gameoflife;
 
+import java.util.Objects;
+
 public class Cell {
     private boolean currLiveStatus;
 
@@ -26,5 +28,19 @@ public class Cell {
         return "Cell{" +
                 "currLiveStatus=" + currLiveStatus +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return currLiveStatus == cell.currLiveStatus;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(currLiveStatus);
     }
 }
