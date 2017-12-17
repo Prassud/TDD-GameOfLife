@@ -1,6 +1,7 @@
 import com.gameoflife.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -122,6 +123,21 @@ public class GameOfLifeTest {
         gameOfLife.tickToNextGeneration();
         Assert.assertEquals(expectedGrid.getGridCellOutput(), grid.getGridCellOutput());
 
+    }
+
+    @Test(expected = InvalidGridException.class)
+    public void verifyIfGridThrowsInvalidGridExceptionWhenMxGridSizeIs0() throws InvalidGridException {
+        new Grid(null, 0);
+    }
+
+    @Test(expected = InvalidGridException.class)
+    public void verifyIfGridThrowsInvalidGridExceptionWhenMxGridSizeIsNegative() throws InvalidGridException {
+        new Grid(null, -1);
+    }
+
+    @Test(expected = InvalidGridException.class)
+    public void verifyIfGridThrowsInvalidGridExceptionWhenGridIsNull() throws InvalidGridException {
+        new GameOfLife(null);
     }
 
 
