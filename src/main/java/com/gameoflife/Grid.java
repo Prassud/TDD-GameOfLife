@@ -44,7 +44,19 @@ public class Grid {
     public Cell getGridCell(int gridRowIdx, int gridColIdx) {
         return this.gridCells[gridRowIdx][gridColIdx];
     }
-    public void updateGridCell(Cell cell , int gridRowIdx, int gridColIdx) {
+
+    public void updateGridCell(Cell cell, int gridRowIdx, int gridColIdx) {
         this.gridCells[gridRowIdx][gridColIdx] = cell;
+    }
+
+    public String getGridCellOutput() {
+        StringBuffer buffer = new StringBuffer(10);
+        for (Cell[] eachRowCells : gridCells) {
+            for (Cell eachCell : eachRowCells) {
+                buffer.append(eachCell != null  && eachCell.isLive() ? 'X' : ' ');
+            }
+            buffer.append(System.lineSeparator());
+        }
+        return buffer.toString();
     }
 }

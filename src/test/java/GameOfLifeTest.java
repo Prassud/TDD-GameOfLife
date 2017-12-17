@@ -10,7 +10,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.List;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -71,7 +70,7 @@ public class GameOfLifeTest {
 
 
     @Test
-    public void verifyIfSecondAndThirdRuleIsSatisfiedWithCellsInIndexesAreLive() {
+    public void verifyIfSecondAndFourthRulesAreSatisfiedWithCellsInIndexesAreLive() {
 
         String liveCellPositions[] = new String[]
                 {"1,0", "1,1", "1,2", "0,1", "2,1"};
@@ -84,8 +83,30 @@ public class GameOfLifeTest {
 
 
     @Test
-    public void verifyIfPatternProvidedIsStillPattern() {
+    public void verifyIfPatternProvidedIsPattern() {
 
+        String expectedResult = "    " + System.lineSeparator() + " XX " + System.lineSeparator() + " XX " + System.lineSeparator() + "    " + System.lineSeparator();
+
+        String liveCellPositions[] = new String[]
+                {"1,1", "1,2", "2,1", "2,2"};
+        Grid grid = new Grid(liveCellPositions, 4);
+        GameOfLife gameOfLife = new GameOfLife(grid);
+        gameOfLife.tickToNextGeneration();
+        Assert.assertEquals(expectedResult, grid.getGridCellOutput());
+
+    }
+
+
+    @Test
+    public void verifyIfPatternProvidedIsOscillatorPattern() {
+        String expectedResult = " X " + System.lineSeparator() + " X " + System.lineSeparator() + " X " + System.lineSeparator() ;
+
+        String liveCellPositions[] = new String[]
+                {"1, 1", "1, 0", "1, 2"};
+        Grid grid = new Grid(liveCellPositions, 3);
+        GameOfLife gameOfLife = new GameOfLife(grid);
+        gameOfLife.tickToNextGeneration();
+        Assert.assertEquals(expectedResult, grid.getGridCellOutput());
 
     }
 

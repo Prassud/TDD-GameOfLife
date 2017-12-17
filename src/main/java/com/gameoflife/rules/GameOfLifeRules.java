@@ -13,7 +13,7 @@ public final class GameOfLifeRules {
                 isCellStateChanged = true;
             }
         } else {
-            if (totalNeighbourLiveCell == 3 || totalNeighbourLiveCell == 2) {
+            if (totalNeighbourLiveCell == 3) {
                 cell.updateFutureLiveStatus(true);
                 isCellStateChanged = true;
             }

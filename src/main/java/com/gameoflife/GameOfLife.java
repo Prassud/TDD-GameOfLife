@@ -29,10 +29,12 @@ public class GameOfLife {
                     this.nextGenModifiedCells.add(currCell);
             }
 
-            this.nextGenModifiedCells.forEach(eachCell -> {
-                eachCell.updateCurrLiveCellFromFuture();
-            });
+
         }
+        this.nextGenModifiedCells.forEach(eachCell -> {
+            eachCell.updateCurrLiveCellFromFuture();
+        });
+        this.nextGenModifiedCells.clear();
 
 
     }
@@ -53,5 +55,6 @@ public class GameOfLife {
         }
         return totalNeighboursLive;
     }
+
 
 }
